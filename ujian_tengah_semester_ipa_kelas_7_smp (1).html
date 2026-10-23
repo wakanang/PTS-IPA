@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Tengah Semester (UTS) IPA Kelas 7 SMP - Kurikulum Merdeka</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+        }
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+        }
+        .print-only {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 min-h-screen text-slate-800 flex items-center justify-center p-3 sm:p-6">
+
+    <div class="max-w-3xl w-full glass-card rounded-3xl shadow-2xl p-5 sm:p-8 border border-white/20 relative overflow-hidden">
+        
+        <!-- Background Decorative Elements -->
+        <div class="absolute -top-16 -right-16 w-40 h-40 bg-blue-500/10 rounded-full blur-2xl pointer-events-none no-print"></div>
+        <div class="absolute -bottom-16 -left-16 w-40 h-40 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none no-print"></div>
+
+        <!-- Header Screen -->
+        <div id="header-area" class="text-center mb-6 no-print">
+            <span class="inline-block bg-indigo-100 text-indigo-700 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider mb-2">
+                UTS IPA Kelas 7 SMP • Semester Ganjil • Kurikulum Merdeka
+            </span>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Asesmen Sumatif Tengah Semester</h1>
+            <p class="text-slate-500 text-xs sm:text-sm mt-1">Materi: Hakikat Ilmu Sains, Zat & Perubahannya, serta Suhu, Kalor & Pemuaian</p>
+        </div>
+
+        <!-- SCREEN 1: Welcome & Registration Screen -->
+        <div id="start-screen" class="space-y-5 no-print">
+            <div class="bg-indigo-50/80 border border-indigo-100 rounded-2xl p-4 sm:p-5 text-sm text-indigo-950 space-y-2">
+                <div class="font-bold flex items-center gap-2 text-indigo-900 text-base">
+                    <span>📋</span> Ketentuan & Petunjuk Ujian:
+                </div>
+                <ul class="list-disc list-inside space-y-1 text-slate-700 text-xs sm:text-sm">
+                    <li>Jumlah Soal: <b>25 Soal (8 Pilihan Ganda Biasa & 15 Pilihan Ganda Kompleks)</b>.</li>
+                    <li>Level Kognitif: <b>50% C3-C4 (Aplikasi & Analisis) dan 50% C5-C6 (Evaluasi & HOTS)</b>.</li>
+                    <li>Waktu Pengerjaan: <b>1 Menit per Soal</b> (Timer otomatis berjalan; soal berpindah jika waktu habis).</li>
+                    <li>Aturan Keamanan: Ujian ini <b>hanya dapat dikerjakan 1 kali</b> per perangkat.</li>
+                    <li>Fitur Tambahan: Kirim laporan nilai ke WhatsApp guru dan cetak/unduh PDF hasil ujian.</li>
+                </ul>
+            </div>
+
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Nama Lengkap Siswa <span class="text-rose-500">*</span></label>
+                    <input type="text" id="input-student-name" placeholder="Contoh: Budi Santoso" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent text-sm bg-white">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Kelas <span class="text-rose-500">*</span></label>
+                        <input type="text" id="input-student-class" placeholder="Contoh: VII-A" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent text-sm bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Nomor Absen / NISN <span class="text-rose-500">*</span></label>
+                        <input type="text" id="input-student-id" placeholder="Contoh: 12456" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent text-sm bg-white">
+                    </div>
+                </div>
+            </div>
+
+            <div id="validation-error" class="hidden text-xs text-rose-600 font-semibold text-center"></div>
+
+            <button onclick="startQuiz()" class="w-full bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-lg shadow-indigo-600/30 cursor-pointer text-sm sm:text-base">
+                Mulai Ujian Sekarang 🚀
+            </button>
+        </div>
+
+        <!-- SCREEN 2: Already Taken Lock Screen -->
+        <div id="already-taken-screen" class="hidden text-center py-6 space-y-4 no-print">
+            <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-3xl mx-auto shadow-inner">
+                🔒
+            </div>
+            <h2 class="text-xl font-extrabold text-slate-800">Ujian Telah Diselesaikan</h2>
+            <p class="text-slate-600 text-sm max-w-md mx-auto">
+                Anda telah menyelesaikan Asesmen UTS ini sebelumnya. Sistem mencatat ujian ini <b class="text-amber-700">hanya dapat dikerjakan 1 kali</b>.
+            </p>
+            <div id="previous-result-box" class="bg-slate-50 border border-slate-200 p-4 rounded-2xl text-left text-xs sm:text-sm space-y-1.5 max-w-md mx-auto">
+                <!-- Populated dynamically -->
+            </div>
+            <button onclick="showReportAgain()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs sm:text-sm transition cursor-pointer">
+                Lihat Kembali Hasil & Unduh PDF 📄
+            </button>
+        </div>
+
+        <!-- SCREEN 3: Active Quiz Screen -->
+        <div id="quiz-screen" class="hidden no-print">
+            <!-- Progress & Timer Bar -->
+            <div class="flex items-center justify-between bg-slate-100/90 p-3 rounded-2xl mb-4 border border-slate-200">
+                <div>
+                    <span id="question-indicator" class="text-xs sm:text-sm font-bold text-slate-700">Soal 1 dari 25</span>
+                    <p id="category-badge" class="text-[10px] sm:text-xs font-semibold text-indigo-600">Hakikat Ilmu Sains</p>
+                </div>
+                <div class="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-sm">
+                    <span class="text-xs">⏱️</span>
+                    <span id="timer-text" class="text-sm font-extrabold text-rose-600 font-mono">01:00</span>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden mb-4">
+                <div id="progress-bar" class="bg-indigo-600 h-2 transition-all duration-300 rounded-full" style="width: 4%;"></div>
+            </div>
+
+            <!-- Question Type Badge -->
+            <div class="mb-2">
+                <span id="qtype-badge" class="inline-block px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-800">
+                    Pilihan Ganda Biasa
+                </span>
+            </div>
+
+            <!-- Question Box -->
+            <div id="question-text" class="text-sm sm:text-base font-bold text-slate-900 mb-4 leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+                <!-- Question dynamically injected -->
+            </div>
+
+            <!-- Media / Diagram Box (SVG) -->
+            <div id="media-box" class="mb-4 flex justify-center">
+                <!-- SVG injected dynamically if available -->
+            </div>
+
+            <!-- Options Box -->
+            <div id="options-container" class="space-y-2.5">
+                <!-- Options dynamically injected -->
+            </div>
+
+            <!-- Submit / Next Button -->
+            <div class="mt-5 flex justify-end">
+                <button onclick="submitAnswerAndNext()" id="btn-next-question" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl text-sm transition shadow-md cursor-pointer active:scale-[0.98]">
+                    Simpan & Lanjut ➔
+                </button>
+            </div>
+
+            <div id="auto-advance-msg" class="hidden mt-2 text-center text-xs font-semibold text-indigo-600 animate-pulse">
+                Waktu habis! Menyimpan jawaban otomatis...
+            </div>
+        </div>
+
+        <!-- SCREEN 4: Result & Report Screen -->
+        <div id="result-screen" class="hidden space-y-5">
+            <div class="text-center space-y-2 no-print">
+                <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto font-bold shadow-inner animate-bounce">
+                    🎓
+                </div>
+                <h2 class="text-2xl font-extrabold text-slate-900">Ujian UTS Selesai!</h2>
+                <p id="student-summary" class="text-slate-500 text-sm"></p>
+            </div>
+
+            <!-- Printable Report Container -->
+            <div id="printable-report" class="bg-white border-2 border-indigo-100 p-6 rounded-2xl shadow-sm space-y-4 text-slate-800">
+                <div class="text-center border-b border-slate-200 pb-3">
+                    <h3 class="font-extrabold text-base sm:text-lg text-indigo-950">SERTIFIKAT HASIL UJIAN TENGAH SEMESTER (UTS)</h3>
+                    <p class="text-xs text-slate-500">Mata Pelajaran: IPA Kelas 7 SMP • Kurikulum Merdeka</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 text-xs sm:text-sm bg-slate-50 p-3 rounded-xl border border-slate-100">
+                    <div><b>Nama Siswa:</b> <span id="rep-name">-</span></div>
+                    <div><b>Kelas:</b> <span id="rep-class">-</span></div>
+                    <div><b>No. Absen/NISN:</b> <span id="rep-id">-</span></div>
+                    <div><b>Waktu Ujian:</b> <span id="rep-time">-</span></div>
+                </div>
+
+                <div class="text-center py-2 bg-indigo-50/50 rounded-xl border border-indigo-100">
+                    <span class="text-xs font-bold uppercase tracking-wider text-indigo-800">Nilai Akhir Perolehan</span>
+                    <div id="final-score" class="text-4xl sm:text-5xl font-extrabold text-indigo-700 my-1">0 / 100</div>
+                    <p id="score-predicate" class="text-xs sm:text-sm font-semibold text-slate-700"></p>
+                </div>
+
+                <div class="text-[11px] text-slate-500 text-center">
+                    Status: <b class="text-emerald-700">Telah diverifikasi sistem (1x Pengerjaan Otomatis)</b>
+                </div>
+            </div>
+
+            <!-- Action Buttons (No Print) -->
+            <div class="space-y-3 no-print">
+                <!-- WhatsApp Direct Box -->
+                <div class="bg-emerald-50/80 p-4 rounded-2xl border border-emerald-200 text-left space-y-2">
+                    <div class="flex items-center gap-2 text-emerald-900 font-bold text-xs sm:text-sm">
+                        <svg class="w-5 h-5 fill-emerald-600 flex-shrink-0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                        Kirim Laporan Nilai ke WhatsApp Guru:
+                    </div>
+                    <p class="text-[11px] text-emerald-800">Nomor Guru: <b>08237296601</b></p>
+                    <button onclick="sendToWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-bold py-3 px-4 rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow-md cursor-pointer">
+                        Kirim Nilai Sekarang via WhatsApp
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <button onclick="printPDFReport()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow cursor-pointer">
+                        🖨️ Cetak / Unduh File PDF
+                    </button>
+                    <button onclick="resetAppStorageForDemo()" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer">
+                        🔄 Reset Demo (Uji Coba Ulang)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 25 Questions Dataset (8 Regular MC + 15 Complex MC)
+        // Material proportion: Hakikat Sains (8), Zat & Perubahannya (8), Suhu, Kalor & Pemuaian (9)
+        // Cognitive levels: C3-C4 (50%), C5-C6 (50%)
+        const questions = [
+            // --- TOPIC 1: HAKIKAT ILMU SAINS (8 Soal) ---
+            {
+                id: 1,
+                category: "Hakikat Ilmu Sains",
+                type: "regular", // regular (1 correct)
+                level: "C3 (Aplikasi)",
+                question: "1. Seorang peneliti ingin mengetahui apakah kadar garam air kolam berpengaruh terhadap kecepatan perkecambahan biji kacang hijau. Tahapan metode ilmiah manakah yang sedang dilakukan saat peneliti menuliskan rumusan masalah tersebut?",
+                svg: `<svg class="w-full max-w-xs h-24 bg-slate-100 rounded-xl p-2" viewBox="0 0 200 80"><text x="10" y="30" font-size="12" font-weight="bold" fill="#334155">1. Observasi ➔ 2. Rumusan Masalah</text><text x="10" y="55" font-size="11" fill="#475569">3. Hipotesis ➔ 4. Eksperimen</text></svg>`,
+                options: [
+                    { text: "Merumuskan hipotesis sementara", correct: false },
+                    { text: "Menentukan batasan masalah dan tujuan penyelidikan ilmiah", correct: true },
+                    { text: "Melakukan analisis data statistik", correct: false },
+                    { text: "Menarik kesimpulan akhir penelitian", correct: false }
+                ],
+                rationale: "Menuliskan rumusan masalah adalah langkah awal terarah setelah observasi untuk menentukan fokus penyelidikan."
+            },
+            {
+                id: 2,
+                category: "Hakikat Ilmu Sains",
+                type: "complex", // complex (multiple correct answers)
+                level: "C4 (Analisis)",
+                question: "2. Dalam sebuah percobaan pengaruh intensitas cahaya terhadap suhu air, tentukan manakah variabel yang termasuk ke dalam <b class='text-indigo-700'>Variabel Bebas</b> dan <b class='text-indigo-700'>Variabel Kontrol</b>! (Pilih 2 jawaban yang benar)",
+                options: [
+                    { text: "Jarak lampu sorot ke wadah air (diubah-ubah jaraknya)", correct: true },
+                    { text: "Kenaikan suhu akhir air dalam termometer", correct: false },
+                    { text: "Volume air mula-mula 200 ml pada setiap wadah (dibuat sama)", correct: true },
+                    { text: "Warna wadah penampung air", correct: false }
+                ],
+                rationale: "Variabel bebas adalah faktor yang sengaja diubah (jarak lampu), sedangkan variabel kontrol adalah kondisi yang dibuat tetap (volume air)."
+            },
+            {
+                id: 3,
+                category: "Hakikat Ilmu Sains",
+                type: "regular",
+                level: "C3 (Aplikasi)",
+                question: "3. Perhatikan gambar alat laboratorium di bawah ini. Alat manakah yang paling tepat dan akurat untuk mengambil larutan asam klorida sebanyak tepat 12,5 mL?",
+                svg: `<svg class="w-full max-w-xs h-28 bg-slate-100 rounded-xl flex items-center justify-center p-2" viewBox="0 0 200 90"><path d="M50,10 L50,80 L70,80 L70,10 Z" fill="#cbd5e1"/><path d="M100,20 L105,75 L115,75 L120,20 Z" fill="#93c5fd"/><text x="20" y="50" font-size="10" fill="#334155">Gelas Kimia</text><text x="130" y="50" font-size="10" fill="#334155">Gelas Ukur</text></svg>`,
+                options: [
+                    { text: "Gelas kimia (Beaker) ukuran 250 mL", correct: false },
+                    { text: "Gelas ukur berskala mililiter", correct: true },
+                    { text: "Labu Erlenmeyer 100 mL", correct: false },
+                    { text: "Tabung reaksi kaca", correct: false }
+                ],
+                rationale: "Gelas ukur memiliki ketelitian skala mililiter untuk mengukur volume cairan secara presisi."
+            },
+            {
+                id: 4,
+                category: "Hakikat Ilmu Sains",
+                type: "complex",
+                level: "C5 (Evaluasi)",
+                question: "4. Sebuah laboratorium sekolah memiliki botol zat kimia dengan simbol bahaya tertentu. Manakah di antara pernyataan berikut yang merupakan tindakan keselamatan yang BENAR saat menghadapi zat bersimbol <b class='text-rose-600'>Tengkorak (Toxic/Beracun)</b> dan <b class='text-rose-600'>Cairan Menetes (Corrosive/Korosif)</b>? (Pilih 2 jawaban yang benar)",
+                options: [
+                    { text: "Menggunakan sarung tangan karet dan kacamata pelindung saat menuang cairan korosif", correct: true },
+                    { text: "Mencium aroma zat beracun secara langsung dari dekat botol agar yakin baunya", correct: false },
+                    { text: "Mencuci tangan dengan bersih setelah selesai melakukan praktikum kimia", correct: true },
+                    { text: "Membuang sisa zat asam korosif langsung ke dalam saluran air minum terbuka", correct: false }
+                ],
+                rationale: "Zat korosif memerlukan APD pelindung (sarung tangan/kacamata) dan higienitas setelah praktikum sangat wajib."
+            },
+            {
+                id: 5,
+                category: "Hakikat Ilmu Sains",
+                type: "regular",
+                level: "C4 (Analisis)",
+                question: "5. Seorang ilmuwan menemukan hasil eksperimen yang bertentangan dengan teori yang sudah ada selama bertahun-tahun. Sikap ilmiah apa yang paling tepat harus ditunjukkan oleh ilmuwan tersebut?",
+                options: [
+                    { text: "Menyembunyikan data agar tidak dikritik orang lain", correct: false },
+                    { text: "Memalsukan hasil data agar sesuai dengan teori lama", correct: false },
+                    { text: "Menganalisis ulang secara jujur, terbuka, dan objektif terhadap temuan baru", correct: true },
+                    { text: "Menyalahkan alat ukur yang rusak tanpa pengujian", correct: false }
+                ],
+                rationale: "Sikap jujur dan objektif adalah fondasi utama dalam sains saat menghadapi data empiris baru."
+            },
+            {
+                id: 6,
+                category: "Hakikat Ilmu Sains",
+                type: "complex",
+                level: "C6 (Kreativitas/HOTS)",
+                question: "6. Manakah yang merupakan contoh penerapan ilmu Sains dalam bidang <b class='text-indigo-700'>Bioteknologi dan Lingkungan</b> yang mendukung pelestarian alam? (Pilih 2 jawaban yang benar)",
+                options: [
+                    { text: "Pembuatan bahan bakar nabati (biodiesel) dari minyak jelantah kelapa sawit", correct: true },
+                    { text: "Penggunaan batubara berlebih tanpa filter untuk pembangkit listrik", correct: false },
+                    { text: "Pemanfaatan bakteri pengurai limbah (bioremediasi) pada tumpahan minyak di laut", correct: true },
+                    { text: "Penebangan hutan liar untuk pembukaan lahan pabrik kimia", correct: false }
+                ],
+                rationale: "Biodiesel dan bioremediasi adalah sains terapan yang ramah lingkungan dan berkelanjutan."
+            },
+            {
+                id: 7,
+                category: "Hakikat Ilmu Sains",
+                type: "regular",
+                level: "C3 (Aplikasi)",
+                question: "7. Dalam sistem Satuan Internasional (SI), besaran pokok panjang, massa, dan waktu secara berturut-turut memiliki satuan baku ....",
+                options: [
+                    { text: "Meter, Kilogram, Sekon (Detik)", correct: true },
+                    { text: "Centimeter, Gram, Menit", correct: false },
+                    { text: "Kilometer, Ton, Jam", correct: false },
+                    { text: "Milimeter, Miligram, Sekon", correct: false }
+                ],
+                rationale: "Satuan SI standar internasional untuk panjang adalah meter (m), massa adalah kilogram (kg), dan waktu adalah sekon (s)."
+            },
+            {
+                id: 8,
+                category: "Hakikat Ilmu Sains",
+                type: "complex",
+                level: "C5 (Evaluasi)",
+                question: "8. Manakah pernyataan yang mencerminkan karakteristik kerja seorang ilmuwan sains yang benar dalam melakukan penyelidikan? (Pilih 2 jawaban yang benar)",
+                options: [
+                    { text: "Selalu dilandasi rasa ingin tahu yang tinggi dan mengajukan pertanyaan berbasis bukti", correct: true },
+                    { text: "Mengambil kesimpulan cepat hanya berdasarkan asumsi pribadi tanpa pengujian", correct: false },
+                    { text: "Melakukan eksperimen berulang kali untuk memastikan keakuratan data", correct: true },
+                    { text: "Menolak berdiskusi dengan peneliti lain karena merasa paling benar", correct: false }
+                ],
+                rationale: "Ilmuwan bekerja berdasarkan rasa ingin tahu empiris dan verifikasi eksperimen berulang."
+            },
+
+            // --- TOPIC 2: ZAT DAN PERUBAHANNYA (8 Soal) ---
+            {
+                id: 9,
+                category: "Zat dan Perubahannya",
+                type: "regular",
+                level: "C3 (Aplikasi)",
+                question: "9. Perhatikan sifat-sifat partikel zat berikut: \n1) Gaya tarik antar partikel sangat lemah\n2) Susunan partikel sangat renggang dan bebas bergerak\n3) Bentuk dan volume berubah-ubah mengikuti wadahnya\nZat apakah yang memiliki karakteristik tersebut?",
+                svg: `<svg class="w-full max-w-xs h-24 bg-slate-100 rounded-xl flex items-center justify-around p-2" viewBox="0 0 200 70"><circle cx="40" cy="35" r="8" fill="#3b82f6"/><circle cx="100" cy="20" r="8" fill="#3b82f6"/><circle cx="160" cy="50" r="8" fill="#3b82f6"/><text x="30" y="65" font-size="10" fill="#334155">Zat Gas</text></svg>`,
+                options: [
+                    { text: "Zat Padat", correct: false },
+                    { text: "Zat Cair", correct: false },
+                    { text: "Zat Gas", correct: true },
+                    { text: "Zat Kristal Logam", correct: false }
+                ],
+                rationale: "Zat gas memiliki jarak partikel sangat renggang, gaya tarik antar partikel sangat lemah, serta bentuk dan volume tidak tetap."
+            },
+            {
+                id: 10,
+                category: "Zat dan Perubahannya",
+                type: "complex",
+                level: "C4 (Analisis)",
+                question: "10. Di antara peristiwa sehari-hari berikut, manakah yang tergolong ke dalam <b class='text-indigo-700'>Perubahan Kimia</b>? (Pilih 2 jawaban yang benar)",
+                options: [
+                    { text: "Besi pagar rumah mengalami perkaratan karena bereaksi dengan oksigen dan air", correct: true },
+                    { text: "Gula pasir dilarutkan ke dalam segelas air hangat hingga larut", correct: false },
+                    { text: "Susu segar yang dibiarkan terbuka berubah menjadi basi dan berasa asam", correct: true },
+                    { text: "Es batu di dalam gelas mencair menjadi air jernih", correct: false }
+                ],
+                rationale: "Perkaratan besi dan pembusukan susu menghasilkan zat baru dengan sifat berbeda (perubahan kimia)."
+            },
+            {
+                id: 11,
+                category: "Zat dan Perubahannya",
+                type: "regular",
+                level: "C4 (Numerasi & Analisis)",
+                question: "11. Sebuah batu tak beraturan dimasukkan ke dalam gelas ukur berisi air. Permukaan air awal berada di angka 50 mL, setelah batu dimasukkan, permukaan air naik menjadi 85 mL. Jika massa batu tersebut adalah 140 gram, berapakah massa jenis ($\rho$) batu tersebut?",
+                options: [
+                    { text: "2,5 g/cm³", correct: false },
+                    { text: "4,0 g/cm³", correct: true },
+                    { text: "5,2 g/cm³", correct: false },
+                    { text: "1,6 g/cm³", correct: false }
+                ],
+                rationale: "Volume batu ($V$) = 85 mL - 50 mL = 35 cm³. Massa jenis $\rho = m / V = 140 / 35 = 4,0\\text{ g/cm}^3$."
+            },
+            {
+                id: 12,
+                category: "Zat dan Perubahannya",
+                type: "complex",
+                level: "C5 (Evaluasi)",
+                question: "12. Manakah penjelasan partikel yang BENAR ketika suatu zat cair mengalami proses <b class='text-indigo-700'>Mendidih (Penguapan)</b>? (Pilih 2 jawaban yang benar)",
+                options: [
+                    { text: "Partikel zat mendapat tambahan energi kalor sehingga bergerak makin cepat", correct: true },
+                    { text: "Gaya tarik antar partikel melemah sehingga partikel terlepas ke udara bebas sebagai gas", correct: true },
+                    { text: "Susunan partikel zat menjadi semakin rapat dan kaku seperti batu", correct: false },
+                    { text: "Massa total zat mengalami penyusutan menjadi nol gram", correct: false }
+                ],
+                rationale: "Pemanasan menambah energi kinetik partikel, melemahkan gaya tarik, dan mengubah fase cair menjadi gas."
+            },
+            {
+                id: 13,
+                category: "Zat dan Perubahannya",
+                type: "regular",
+                level: "C3 (Aplikasi)",
+                question: "13. Metode pemisahan campuran yang paling tepat digunakan untuk memisahkan pasir dari air keruh yang tercampur di dalam ember adalah ....",
+                options: [
+                    { text: "Filtrasi (Penyaringan menggunakan kertas saring)", correct: true },
+                    { text: "Distilasi (Penyulingan bertingkat)", correct: false },
+                    { text: "Kromatografi kertas", correct: false },
+                    { text: "Sublimasi kapur barus", correct: false }
+                ],
+                rationale: "Filtrasi memisahkan padatan tak larut (pasir) dari cairan berdasarkan perbedaan ukuran partikel."
+            },
+            {
+                id: 14,
+                category: "Zat dan Perubahannya",
+                type: "complex",
+                level: "C4 (Analisis)",
+                question: "14. Manakah di antara campuran berikut yang tergolong ke dalam <b class='text-indigo-700'>Campuran Homogen (Larutan)</b>? (Pilih 2 jawaban yang benar)",
+                options: [
+                    { text: "Larutan air garam dapur jernih", correct: true },
+                    { text: "Campuran air dengan minyak goreng", correct: false },
+                    { text: "Air teh manis tanpa endapan", correct: true },
+                    { text: "Campuran air sungai dengan lumpur halus", correct: false }
+                ],
+                rationale: "Larutan garam dan teh manis tercampur merata secara sempurna di setiap bagian (homogen)."
+            },
+            {
+                id: 15,
+                category: "Zat dan Perubahannya",
+                type: "regular",
+                level: "C4 (Analisis)",
+                question: "15. Mengapa kapur barus (kamper) yang dibiarkan di dalam lemari pakaian terbuka lama-kelamaan akan habis ukurannya tanpa meninggalkan sisa cairan?",
+                options: [
+                    { text: "Kapur barus meleleh menjadi cairan lalu meresap ke kayu", correct: false },
+                    { text: "Kapur barus mengalami menyublim (berubah dari padat langsung menjadi gas)", correct: true },
+                    { text: "Kapur barus bereaksi dengan udara membentuk air", correct: false },
+                    { text: "Kapur barus mengalami pembekuan", correct: false }
+                ],
+                rationale: "Sublimasi adalah peristiwa perubahan wujud dari zat padat langsung menjadi gas."
+            },
+            {
+                id: 16,
+                category: "Zat dan Perubahannya",
+                type: "complex",
+                level: "C6 (Kreativitas/HOTS)",
+                question: "16. Seorang siswa ingin memisahkan campuran air murni dari air laut yang kotor dan asin. Kombinasi metode pemisahan apakah yang paling tepat dilakukan? (Pilih 2 jawaban yang benar)",
+                options: [
+                    { text: "Filtrasi terlebih dahulu untuk menyaring kotoran padat tersuspensi", correct: true },
+                    { text: "Distilasi (Penyulingan) untuk menguapkan air dan mengembunkan uap murninya", correct: true },
+                    { text: "Penjemuran langsung di terik matahari tanpa wadah penampung", correct: false },
+                    { text: "Penyaringan dengan saringan teh biasa hingga garam terpisah", correct: false }
+                ],
+                rationale: "Filtrasi menyaring kotoran besar, kemudian distilasi memisahkan air murni dari larutan garam air laut."
+            },
+
+            // --- TOPIC 3: SUHU, KALOR DAN PEMUAIANNYA (9 Soal) ---
+            {
+                id: 17,
+                category: "Suhu, Kalor & Pemuaian",
+                type: "regular",
+                level: "C3 (Aplikasi)",
+                question: "17. Suhu suatu zat cair diukur menggunakan termometer Celsius menunjukkan angka 45°C. Jika suhu tersebut dikonversikan ke dalam skala Reamur (°R), berapakah nilainya?",
+                options: [
+                    { text: "36°R", correct: true },
+                    { text: "56°R", correct: false },
+                    { text: "81°R", correct: false },
+                    { text: "40°R", correct: false }
+                ],
+                rationale: "Rumus konversi Celsius ke Reamur: $R = (4/5) \times C = (4/5) \times 45 = 36^\circ\\text{R}$."
+            },
+            {
+                id: 18,
+                category: "Suhu, Kalor & Pemuaian",
+                type: "complex",
+                level: "C4 (Analisis)",
+                question: "18. Manakah di antara peristiwa berikut yang merupakan contoh perpindahan kalor secara <b class='text-indigo-700'>Konveksi</b> (disertai perpindahan partikel zat)? (Pilih 2 jawaban yang benar)",
+                options: [
+                    { text: "Badan terasa hangat ketika duduk di dekat api unggun", correct: false },
+                    { text: "Mendidihkan air di dalam panci logam di atas kompor", correct: true },
+                    { text: "Terjadinya angin darat dan angin laut di kawasan pantai", correct: true },
+                    { text: "Ujung sendok logam terasa panas saat dipakai mengaduk teh panas", correct: false }
+                ],
+                    rationale: "Mendidihkan air dan angin darat/laut adalah contoh perpindahan panas secara konveksi (aliran zat)."
+            },
+            {
+                id: 19,
+                category: "Suhu, Kalor & Pemuaian",
+                type: "regular",
+                level: "C4 (Numerasi)",
+                question: "19. Sebanyak 2 kg air dipanaskan dari suhu 20°C hingga 70°C. Jika diketahui kalor jenis air ($c$) adalah 4.200 J/kg°C, berapakah besar energi kalor ($Q$) yang dibutuhkan?",
+                options: [
+                    { text: "210.000 Joule", correct: false },
+                    { text: "420.000 Joule", correct: true },
+                    { text: "168.000 Joule", correct: false },
+                    { text: "840.000 Joule", correct: false }
+                ],
+                rationale: "Rumus $Q = m \cdot c \cdot \Delta T = 2 \cdot 4200 \cdot (70 - 20) = 2 \cdot 4200 \cdot 50 = 420.000\\text{ Joule}$."
+            },
+            {
+                id: 20,
+                category: "Suhu, Kalor & Pemuaian",
+                type: "complex",
+                level: "C5 (Evaluasi)",
+                question: "20. Mengapa pemasangan sambungan rel kereta api dan jembatan baja selalu diberikan celah pemuaian? (Pilih 2 jawaban yang benar)",
+                options: [
+                    { text: "Untuk mencegah rel melengkung atau patah saat memuai di siang hari yang panas", correct: true },
+                    { text: "Agar kereta dapat berjalan dengan kecepatan lebih tinggi tanpa hambatan", correct: false },
+                    { text: "Memberikan ruang bagi logam untuk memuai ke segala arah tanpa merusak struktur", correct: true },
+                    { text: "Menghemat penggunaan bahan besi baja saat proses pabrikasi", correct: false }
+                ],
+                rationale: "Celah rel diperlukan agar saat suhu naik dan logam memuai, rel tidak melengkung berbahaya."
+            },
+            {
+                id: 21,
+                category: "Suhu, Kalor & Pemuaian",
+                type: "regular",
+                level: "C3 (Aplikasi)",
+                question: "21. Perpindahan panas dari matahari hingga dapat sampai ke permukaan bumi melewati ruang hampa udara terjadi secara ....",
+                options: [
+                    { text: "Konduksi", correct: false },
+                    { text: "Konveksi", correct: false },
+                    { text: "Radiasi (Pancaran gelombang elektromagnetik)", correct: true },
+                    { text: "Evaporasi", correct: false }
+                ],
+                rationale: "Radiasi adalah perpindahan kalor tanpa memerlukan zat perantara (medium), melalui pancaran gelombang."
+            },
+            {
+                id: 22,
+                category: "Suhu, Kalor & Pemuaian",
+                type: "complex",
+                level: "C5 (Evaluasi)",
+                question: "22. Perhatikan prinsip kerja termostat otomatis pada setrika listrik. Ketika setrika menjadi sangat panas, keping bimetal akan melengkung dan memutus aliran listrik. Pernyataan manakah yang BENAR mengenai bimetal tersebut? (Pilih 2 jawaban yang benar)",
+                options: [
+                    { text: "Bimetal tersusun dari dua buah logam berbeda koefisien muai panjangnya", correct: true },
+                    { text: "Logam yang memiliki koefisien muai lebih besar akan melengkung ke arah bagian yang lebih panjang", correct: true },
+                    { text: "Kedua logam memiliki sifat pemuaian yang persis sama persis tanpa perbedaan", correct: false },
+                    { text: "Bimetal terbuat dari bahan kayu isolator tahan panas", correct: false }
+                ],
+                rationale: "Bimetal terdiri dari 2 logam berkoefisien muai beda; saat panas, logam yang muainya lebih besar akan melengkung ke sisi sebaliknya."
+            },
+            {
+                id: 23,
+                category: "Suhu, Kalor & Pemuaian",
+                type: "regular",
+                level: "C4 (Analisis)",
+                question: "23. Mengapa tutup botol kaca yang terbuat dari logam dan macet rapat dapat lebih mudah dibuka setelah bagian tutup logamnya disiram dengan air panas?",
+                options: [
+                    { text: "Tutup logam memuai lebih cepat dan lebih besar daripada leher botol kaca", correct: true },
+                    { text: "Kaca botol menyusut drastis hingga ukurannya mengecil", correct: false },
+                    { text: "Air panas melarutkan seluruh bahan kaca botol", correct: false },
+                    { text: "Tekanan udara di dalam botol menjadi nol", correct: false }
+                ],
+                rationale: "Logam memiliki koefisien muai lebih tinggi dari kaca, sehingga siraman air panas membuat tutup logam meregang/melonggar."
+            },
+            {
+                id: 24,
+                category: "Suhu, Kalor & Pemuaian",
+                type: "complex",
+                level: "C6 (Kreativitas/HOTS)",
+                question: "24. Dalam merancang termos air panas agar suhu air di dalamnya tetap bertahan lama, rekayasa desain apa saja yang diterapkan pada dinding termos? (Pilih 2 jawaban yang benar)",
+                options: [
+                    { text: "Menggunakan dinding rangkap vakum (hampa udara) untuk mencegah konduksi dan konveksi", correct: true },
+                    { text: "Melapisi dinding kaca bagian dalam dengan lapisan perak mengkilap untuk memantulkan radiasi panas", correct: true },
+                    { text: "Menggunakan tutup rapat dari besi konduktor panas terbaik", correct: false },
+                    { text: "Membiarkan rongga udara terbuka lebar agar panas cepat keluar", correct: false }
+                ],
+                rationale: "Termos menggunakan vakum untuk meredam konduksi/konveksi serta cermin perak untuk memantulkan radiasi."
+            },
+            {
+                id: 25,
+                category: "Suhu, Kalor & Pemuaian",
+                type: "regular",
+                level: "C5 (Evaluasi)",
+                question: "25. Air memiliki keunikan anomali air pada kisaran suhu 0°C sampai 4°C. Saat air didinginkan dari suhu 4°C turun menuju 0°C, apa yang terjadi pada volume air tersebut?",
+                options: [
+                    { text: "Volume air terus menyusut makin kecil", correct: false },
+                    { text: "Volume air justru memuai (membesar)", correct: true },
+                    { text: "Massa jenis air menjadi sangat besar tak terhingga", correct: false },
+                    { text: "Wujud air langsung berubah menjadi gas", correct: false }
+                ],
+                rationale: "Anomali air menyatakan bahwa antara 0°C - 4°C, air menyusut saat dipanaskan dan memuai saat didinginkan (volumenya membesar saat mendekati 0°C)."
+            }
+        ];
+
+        // System State
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = {}; // stores answers per question id
+        let timerInterval = null;
+        let timeLeft = 60; // 1 minute per question
+        let studentInfo = { name: "", class: "", id: "", timestamp: "" };
+
+        const STORAGE_KEY = "UTS_IPA_K7_GANJIL_TAKEN_V1";
+
+        window.onload = function() {
+            checkIfAlreadyTaken();
+        };
+
+        function checkIfAlreadyTaken() {
+            const savedRecord = localStorage.getItem(STORAGE_KEY);
+            if (savedRecord) {
+                const record = JSON.parse(savedRecord);
+                document.getElementById('start-screen').classList.add('hidden');
+                document.getElementById('already-taken-screen').classList.remove('hidden');
+                
+                document.getElementById('previous-result-box').innerHTML = `
+                    <div class="font-bold text-slate-800 text-sm border-b border-slate-200 pb-1 mb-1">Riwayat Tersimpan:</div>
+                    <div>👤 <b>Nama:</b> ${record.name}</div>
+                    <div>🏫 <b>Kelas:</b> ${record.class} | <b>NISN:</b> ${record.id}</div>
+                    <div>📊 <b>Nilai Akhir:</b> <span class="text-indigo-600 font-bold">${record.score} / 100</span></div>
+                    <div>📅 <b>Waktu:</b> ${record.timestamp}</div>
+                `;
+            }
+        }
+
+        function showReportAgain() {
+            const savedRecord = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            if (!savedRecord) return;
+
+            document.getElementById('already-taken-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+
+            document.getElementById('rep-name').innerText = savedRecord.name;
+            document.getElementById('rep-class').innerText = savedRecord.class;
+            document.getElementById('rep-id').innerText = savedRecord.id;
+            document.getElementById('rep-time').innerText = savedRecord.timestamp;
+            document.getElementById('final-score').innerText = `${savedRecord.score} / 100`;
+            document.getElementById('student-summary').innerText = `Siswa: ${savedRecord.name} (${savedRecord.class})`;
+
+            let predicate = "";
+            if (savedRecord.score >= 90) predicate = "Predikat: Sangat Baik (A) - Penguasaan Konsep Paripurna 🌟";
+            else if (savedRecord.score >= 80) predicate = "Predikat: Baik (B) - Pemahaman Sains & HOTS Sangat Memuaskan 👍";
+            else if (savedRecord.score >= 70) predicate = "Predikat: Cukup (C) - Ketuntasan Belajar Tercapai 📖";
+            else predicate = "Predikat: Perlu Bimbingan (D) - Tingkatkan Lagi Belajar Mandiri ✏️";
+
+            document.getElementById('score-predicate').innerText = predicate;
+        }
+
+        function startQuiz() {
+            const nameInput = document.getElementById('input-student-name').value.trim();
+            const classInput = document.getElementById('input-student-class').value.trim();
+            const idInput = document.getElementById('input-student-id').value.trim();
+            const errBox = document.getElementById('validation-error');
+
+            if (!nameInput || !classInput || !idInput) {
+                errBox.innerText = "Mohon lengkapi Nama, Kelas, dan Nomor Absen/NISN terlebih dahulu!";
+                errBox.classList.remove('hidden');
+                return;
+            }
+
+            errBox.classList.add('hidden');
+            studentInfo.name = nameInput;
+            studentInfo.class = classInput;
+            studentInfo.id = idInput;
+            studentInfo.timestamp = new Date().toLocaleString('id-ID');
+
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            clearInterval(timerInterval);
+            timeLeft = 60; // 1 minute per question
+            updateTimerDisplay();
+
+            const currentQ = questions[currentQuestionIndex];
+
+            document.getElementById('question-indicator').innerText = `Soal ${currentQuestionIndex + 1} dari ${questions.length}`;
+            document.getElementById('category-badge').innerText = `Materi: ${currentQ.category}`;
+            document.getElementById('progress-bar').style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
+            document.getElementById('question-text').innerHTML = currentQ.question;
+
+            // QType Badge
+            const qtypeBadge = document.getElementById('qtype-badge');
+            if (currentQ.type === 'regular') {
+                qtypeBadge.className = "inline-block px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-800";
+                qtypeBadge.innerText = "Pilihan Ganda Biasa (1 Jawaban)";
+            } else {
+                qtypeBadge.className = "inline-block px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider bg-purple-100 text-purple-800";
+                qtypeBadge.innerText = "Pilihan Ganda Kompleks (Bisa >1 Jawaban)";
+            }
+
+            // Media SVG
+            const mediaBox = document.getElementById('media-box');
+            if (currentQ.svg) {
+                mediaBox.innerHTML = currentQ.svg;
+                mediaBox.classList.remove('hidden');
+            } else {
+                mediaBox.innerHTML = '';
+                mediaBox.classList.add('hidden');
+            }
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            currentQ.options.forEach((opt, idx) => {
+                const btn = document.createElement('div');
+                btn.className = "w-full text-left p-3.5 sm:p-4 rounded-xl border border-slate-200 bg-white hover:bg-indigo-50/70 hover:border-indigo-300 font-medium text-slate-700 text-xs sm:text-sm transition shadow-sm cursor-pointer flex items-start gap-3 group active:scale-[0.99]";
+                
+                let inputHtml = "";
+                if (currentQ.type === 'regular') {
+                    const isChecked = userAnswers[currentQ.id] === idx ? 'checked' : '';
+                    inputHtml = `<input type="radio" name="q_option" value="${idx}" ${isChecked} class="mt-1 w-4 h-4 text-indigo-600 focus:ring-indigo-500 cursor-pointer">`;
+                } else {
+                    const savedArr = userAnswers[currentQ.id] || [];
+                    const isChecked = savedArr.includes(idx) ? 'checked' : '';
+                    inputHtml = `<input type="checkbox" name="q_option_complex" value="${idx}" ${isChecked} class="mt-1 w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer">`;
+                }
+
+                btn.innerHTML = `
+                    ${inputHtml}
+                    <div class="flex-1 leading-relaxed">
+                        <span class="font-bold text-indigo-900 mr-1.5">${String.fromCharCode(65 + idx)}.</span> ${opt.text}
+                    </div>
+                `;
+
+                btn.onclick = (e) => {
+                    // Trigger input click if clicked div
+                    if (e.target.tagName !== 'INPUT') {
+                        const input = btn.querySelector('input');
+                        if (currentQ.type === 'regular') {
+                            input.checked = true;
+                        } else {
+                            input.checked = !input.checked;
+                        }
+                    }
+                };
+
+                optionsContainer.appendChild(btn);
+            });
+
+            // Start 1 minute countdown
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    autoSubmitAndAdvance();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const formatted = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            document.getElementById('timer-text').innerText = formatted;
+            
+            const timerEl = document.getElementById('timer-text');
+            if (timeLeft <= 10) {
+                timerEl.classList.add('animate-ping');
+            } else {
+                timerEl.classList.remove('animate-ping');
+            }
+        }
+
+        function saveCurrentAnswer() {
+            const currentQ = questions[currentQuestionIndex];
+            if (currentQ.type === 'regular') {
+                const selected = document.querySelector('input[name="q_option"]:checked');
+                if (selected) {
+                    userAnswers[currentQ.id] = parseInt(selected.value);
+                } else {
+                    userAnswers[currentQ.id] = -1; // unanswered
+                }
+            } else {
+                const checkedBoxes = document.querySelectorAll('input[name="q_option_complex"]:checked');
+                const arr = Array.from(checkedBoxes).map(cb => parseInt(cb.value));
+                userAnswers[currentQ.id] = arr;
+            }
+        }
+
+        function autoSubmitAndAdvance() {
+            saveCurrentAnswer();
+            document.getElementById('auto-advance-msg').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('auto-advance-msg').classList.add('hidden');
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    loadQuestion();
+                } else {
+                    finishQuiz();
+                }
+            }, 700);
+        }
+
+        function submitAnswerAndNext() {
+            saveCurrentAnswer();
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function calculateScore() {
+            let totalScore = 0;
+            const pointsPerQuestion = 100 / questions.length; // 4 points each for 25 questions
+
+            questions.forEach(q => {
+                const ans = userAnswers[q.id];
+                if (q.type === 'regular') {
+                    if (ans !== undefined && ans >= 0 && q.options[ans].correct) {
+                        totalScore += pointsPerQuestion;
+                    }
+                } else {
+                    // Complex MCQ: all correct options selected and no incorrect selected gets full points
+                    // or partial proportional grading
+                    if (ans && Array.isArray(ans)) {
+                        const correctIndices = q.options.map((opt, idx) => opt.correct ? idx : -1).filter(idx => idx !== -1);
+                        const userSet = new Set(ans);
+                        const correctSet = new Set(correctIndices);
+                        
+                        // Check if exact match
+                        let isExact = userSet.size === correctSet.size && [...userSet].every(val => correctSet.has(val));
+                        if (isExact) {
+                            totalScore += pointsPerQuestion;
+                        } else {
+                            // Partial credit: count correct selections minus incorrect selections
+                            let correctSelected = [...userSet].filter(val => correctSet.has(val)).length;
+                            let incorrectSelected = [...userSet].filter(val => !correctSet.has(val)).length;
+                            let netCorrect = Math.max(0, correctSelected - incorrectSelected);
+                            let fraction = netCorrect / correctSet.size;
+                            totalScore += fraction * pointsPerQuestion;
+                        }
+                    }
+                }
+            });
+
+            return Math.round(totalScore);
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            score = calculateScore();
+
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+
+            // Save state to LocalStorage so it locks to 1 time
+            const recordData = {
+                name: studentInfo.name,
+                class: studentInfo.class,
+                id: studentInfo.id,
+                score: score,
+                timestamp: studentInfo.timestamp
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(recordData));
+
+            document.getElementById('rep-name').innerText = studentInfo.name;
+            document.getElementById('rep-class').innerText = studentInfo.class;
+            document.getElementById('rep-id').innerText = studentInfo.id;
+            document.getElementById('rep-time').innerText = studentInfo.timestamp;
+            document.getElementById('final-score').innerText = `${score} / 100`;
+            document.getElementById('student-summary').innerText = `Siswa: ${studentInfo.name} (${studentInfo.class})`;
+
+            let predicate = "";
+            if (score >= 90) predicate = "Predikat: Sangat Baik (A) - Penguasaan Konsep Paripurna 🌟";
+            else if (score >= 80) predicate = "Predikat: Baik (B) - Pemahaman Sains & HOTS Sangat Memuaskan 👍";
+            else if (score >= 70) predicate = "Predikat: Cukup (C) - Ketuntasan Belajar Tercapai 📖";
+            else predicate = "Predikat: Perlu Bimbingan (D) - Tingkatkan Lagi Belajar Mandiri ✏️";
+
+            document.getElementById('score-predicate').innerText = predicate;
+        }
+
+        function sendToWhatsApp() {
+            const targetPhone = "628237296601";
+            const message = `Yth. Bapak/Ibu Guru IPA,\n\nBerikut adalah Laporan Hasil Ujian Tengah Semester (UTS) IPA Kelas 7 SMP:\n\n👤 *Nama Siswa*: ${studentInfo.name || 'Siswa'}\n🏫 *Kelas*: ${studentInfo.class || '-'}\n🆔 *NISN/Absen*: ${studentInfo.id || '-'}\n📚 *Materi*: Hakikat Sains, Zat & Perubahannya, Suhu & Kalor\n📊 *Nilai Akhir*: ${score} / 100\n⏱️ *Waktu Ujian*: ${studentInfo.timestamp}\n\nTerima kasih.`;
+
+            const waUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(message)}`;
+            window.open(waUrl, '_blank');
+        }
+
+        function printPDFReport() {
+            window.print();
+        }
+
+        function resetAppStorageForDemo() {
+            localStorage.removeItem(STORAGE_KEY);
+            location.reload();
+        }
+    </script>
+</body>
+</html>
